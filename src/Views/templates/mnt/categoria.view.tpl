@@ -1,49 +1,50 @@
-<h1>{{mode_dsc}}</h1>
-<section>
-  <form action="index.php?page=mnt_categoria&mode={{mode}}&catid={{catid}}"
-    method="POST" >
-    <section>
-    <label for="catid">Código</label>
-    <input type="hidden" id="catid" name="catid" value="{{catid}}"/>
-    <input type="text" readonly name="catiddummy" value="{{catid}}"/>
-    </section>
-    <section>
-      <label for="catnom">Categoría</label>
-      <input type="text" {{readonly}} name="catnom" value="{{catnom}}" maxlength="45" placeholder="Nombre de Categoría"/>
-    </section>
-    <section>
-      <label for="catest">Estado</label>
-      <select id="catest" name="catest" {{if readonly}}disabled{{endif readonly}}>
-        <option value="ACT" {{catest_ACT}}>Activo</option>
-        <option value="INA" {{catest_INA}}>Inactivo</option>
-        <option value="PLN" {{catest_PLN}}>Planificación</option>
-      </select>
-    </section>
-    {{if hasErrors}}
-        <section>
-          <ul>
-            {{foreach aErrors}}
-                <li>{{this}}</li>
-            {{endfor aErrors}}
-          </ul>
-        </section>
-    {{endif hasErrors}}
-    <section>
-      {{if showaction}}
-      <button type="submit" name="btnGuardar" value="G">Guardar</button>
-      {{endif showaction}}
-      <button type="button" id="btnCancelar">Cancelar</button>
-    </section>
-  </form>
+<h1>{{modeDsc}}</h1>
+<hr>
+
+<section class="container-m">
+
+  <form action="index.php?page=mnt.categorias.categoria&mode={{mode}}&catid={{catid}}" method="post" >
+        {{ifnot isInsert}}
+            <fieldset class="row flex-center align-center">
+                <label for="catid" class="col-5" >Codigo</label>
+                <input type="text" class="col-7" id="catid" name="catid"  value="{{catid}}" placeholder="">
+            </fieldset>
+        {{endifnot isInsert}}
+
+        <fieldset class="row flex-center align-center" >
+            <label for="catnom" class="col-5" >Categoria</label>
+            <input type="text" class="col-7" id="catnom" name="catnom" value="{{catnom}}"  placeholder="">
+        </fieldset>
+
+        <fieldset class="row flex-center align-center">
+            <label for="catest" class="col-5" >Estado</label>
+            <select class="col-7" name="catest" id="catest">
+            {{foreach catestOptions}}
+                <option value="{{value}}" {{selected}}>{{text}}</option>
+            {{endfor catestOptions}}
+            </select>
+        </fieldset>
+
+        <fieldset class="row flex-center align-center">
+            <input name="confirmar" id="confirmar" class="btn primary" type="submit" value="Confirmar">
+            <input name="cancelar" id="cancelar"  class="btn secondary" type="submit" value="Cancelar">
+        </fieldset>
+
+    </form>
+
 </section>
 
-
 <script>
-  document.addEventListener("DOMContentLoaded", function(){
-      document.getElementById("btnCancelar").addEventListener("click", function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        window.location.assign("index.php?page=mnt_categorias");
-      });
-  });
+
+    document.addEventListener('DOMContentLoaded' , e => {
+
+        const btnCancelar = document.querySelector('#cancelar');
+
+        btnCancelar.addEventListener('click' , e => {
+            e.preventDefault();
+            
+            location.assign('index.php?page=mnt_categorias_categorias');
+        })
+    })
+
 </script>
